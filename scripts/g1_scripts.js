@@ -1,6 +1,6 @@
 // constants for the SVG
-var width1 = 600,
-    height1 = 600;
+var width1 = 1000,
+    height1 = 700;
 
 // set up the colour scale
 var color1 = d3.scale.category20();
@@ -8,14 +8,16 @@ var color1 = d3.scale.category20();
 // set up the force layout
 var force1 = d3.layout.force()
     .charge(-100)
-    // .linkStrength(function(d) { return  d.value; })
-    .linkDistance(function(d) { return  (Math.min((2-d.value*1.8),0.02)*4000); })
+    .linkStrength(function(d) { return  ((d.value * 0.9)) })
+    .linkDistance(40)
+    // .linkDistance(function(d) { return  (Math.min((2-d.value*1.8),0.02)*2000); })
     .size([width1, height1]);
 
 // add svg to body of doc
 var svg1 = d3.select("body").append("svg")
     .attr("width", width1)
     .attr("height", height1)
+    // .attr("transform", "scale(1.2)")
     .call(d3.behavior.zoom().on("zoom", function () {svg.attr("transform", d3.event.transform)}))
 
 // store original graph1 data to redraw if needed
@@ -43,7 +45,7 @@ var node1 = svg1.selectAll(".node")
     .on('dblclick', connectednodes);
 node1.append("circle")
     .attr("r", 5)
-    .style("fill", function (d) {return color(d.group);})
+    .style("fill", function (d) {return color1(d.group);})
 node1.append("text")
     .attr("dx", 5)
     .attr("dy", ".35em")
@@ -138,4 +140,4 @@ function restart1() {
 }
 
 // document.getElementById('thersholdSlider1').value=0.5;
-// threshold1(0.5);
+threshold1(0.5);

@@ -3,9 +3,9 @@
     stroke-width: 1.5px;
 }
 .link {
-    color:gray;
-    stroke: gray;
-    opacity: 0.8;
+    color:#ffffff;
+    stroke: white;
+    opacity: 0.0;
     stroke-width: 1.5px;
 }
 
@@ -22,7 +22,7 @@ body {
     color: black;
     stroke-width: 0;
     pointer-events: none;
-    font: 11px helvetica;
+    font: 13px helvetica;
     font-weight: initial;
 }
 .sldr {
