@@ -1,143 +1,146 @@
-// var graph = {"nodes":[],"links":[]};
+var outerRadius = 600 / 2,
+    innerRadius = outerRadius - 100;
 
-// constants for the SVG
-var width = 600,
-    height = 600;
+var color = d3.scaleOrdinal()
+    .domain(["c1", "c2", "c3","c4","c5","c6","c7","c8","c9","c10","c11","c12"])
+    .range(d3.schemeCategory10);
 
-// set up the colour scale
-var color = d3.scale.category20();
+var cluster = d3.cluster()
+    .size([360, innerRadius])
+    .separation(function(a, b) { return 1; });
 
-// set up the force layout
-var force = d3.layout.force()
-    .charge(-100)
-    // .linkStrength(function(d) { return  d.value; })
-    .linkDistance(function(d) { return  (Math.min((2-d.value*1.8),0.02)*500); })
-    .size([width, height]);
+var svg = d3.select("#g0")
+    .attr("width", outerRadius * 2)
+    .attr("height", outerRadius * 2);
 
-// add svg to body of doc
-var svg = d3.select("body").append("svg")
-    .attr("width", width)
-    .attr("height", height)
-    .call(d3.behavior.zoom().on("zoom", function () {svg.attr("transform", d3.event.transform)}))
+// var legend = svg.append("g")
+//     .attr("class", "legend")
+// .selectAll("g")
+// .data(color.domain())
+// .enter().append("g")
+//     .attr("transform", function(d, i) { return "translate(" + (outerRadius * 2 - 10) + "," + (i * 20 + 10) + ")"; });
 
-// store original graph data to redraw if needed
-graphRec=JSON.parse(JSON.stringify(graph));
+// legend.append("rect")
+//     .attr("x", -18)
+//     .attr("width", 18)
+//     .attr("height", 18)
+//     .attr("fill", color);
 
-// create graph structure from json data
-force.nodes(graph.nodes)
-    .links(graph.links)
-    .start();
+// legend.append("text")
+//     .attr("x", -24)
+//     .attr("y", 9)
+//     .attr("dy", ".35em")
+//     .attr("text-anchor", "end")
+//     .text(function(d) { return d; });
 
-// create edges
-var link = svg.selectAll(".link")
-    .data(graph.links)
-    .enter().append("line")
-    .attr("class", "link")
-    // .style("stroke-width", function (d) {return (0.5-d.value)*3;})
-    // .style("opacity", function (d) {return (d.value-0.45)*2;});
+var chart = svg.append("g")
+    .attr("transform", "translate(" + outerRadius + "," + outerRadius + ")");
 
-// create nodes
-var node = svg.selectAll(".node")
-    .data(graph.nodes)
-    .enter().append("g")
-    .attr("class", "node")
-    .call(force.drag)
-    .on('dblclick', connectedNodes);
-node.append("circle")
-    .attr("r", 5)
-    .style("fill", function (d) {return color(d.group);})
-node.append("text")
-    .attr("dx", 5)
-    .attr("dy", ".35em")
-    .text(function(d) { return d.name })            
+d3.text("life.txt", function(error, life) {
+if (error) throw error;
 
+var root = d3.hierarchy(parseNewick(life), function(d) { return d.branchset; })
+    .sum(function(d) { return d.branchset ? 0 : 1; })
+    // .sort(function(a, b) { return (a.value - b.value) || d3.ascending(a.data.length, b.data.length); });
 
-// apply force to define node positions
-force.on("tick", function () {
-    link.attr("x1", function (d) {
-        return d.source.x;
-    })
-        .attr("y1", function (d) {
-        return d.source.y;
-    })
-        .attr("x2", function (d) {
-        return d.target.x;
-    })
-        .attr("y2", function (d) {
-        return d.target.y;
-    });
-    d3.selectAll("circle").attr("cx", function (d) {
-        return d.x;
-    })
-        .attr("cy", function (d) {
-        return d.y;
-    });
-    d3.selectAll("text").attr("x", function (d) {
-        return d.x;
-    })
-        .attr("y", function (d) {
-        return d.y;
-    });
+cluster(root);
+
+var input = d3.select("#show-length input").on("change", changed),
+    timeout = setTimeout(function() { input.property("checked", true).each(changed); }, 2000);
+
+setRadius(root, root.data.length = 0, innerRadius / maxLength(root));
+setColor(root);
+
+var linkExtension = chart.append("g")
+    .attr("class", "link-extensions")
+    .selectAll("path")
+    .data(root.links().filter(function(d) { return !d.target.children; }))
+    .enter().append("path")
+    .each(function(d) { d.target.linkExtensionNode = this; })
+    .attr("d", linkExtensionConstant);
+
+var link = chart.append("g")
+    .attr("class", "links")
+    .selectAll("path")
+    .data(root.links())
+    .enter().append("path")
+    .each(function(d) { d.target.linkNode = this; })
+    .attr("d", linkConstant)
+    .attr("stroke", function(d) { return d.target.color; });
+
+chart.append("g")
+    .attr("class", "labels")
+    .selectAll("text")
+    .data(root.leaves())
+    .enter().append("text")
+    .attr("dy", ".31em")
+    .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + (innerRadius + 4) + ",0)" + (d.x < 180 ? "" : "rotate(180)"); })
+    .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
+    .text(function(d) { return d.data.name.replace(/_/g, " "); })
+    .on("mouseover", mouseovered(true))
+    .on("mouseout", mouseovered(false));
+
+function changed() {
+    clearTimeout(timeout);
+    var t = d3.transition().duration(500);
+    linkExtension.transition(t).attr("d", this.checked ? linkExtensionVariable : linkExtensionConstant);
+    link.transition(t).attr("d", this.checked ? linkVariable : linkConstant);
+}
+
+function mouseovered(active) {
+    return function(d) {
+    d3.select(this).classed("label--active", active);
+    d3.select(d.linkExtensionNode).classed("link-extension--active", active).each(moveToFront);
+    do d3.select(d.linkNode).classed("link--active", active).each(moveToFront); while (d = d.parent);
+    };
+}
+
+function moveToFront() {
+    this.parentNode.appendChild(this);
+}
 });
 
-
-//Toggle stores whether the highlighting is on
-var toggle = 0;
-//Create an array logging what is connected to what
-var linkedByIndex = {};
-for (i = 0; i < graph.nodes.length; i++) {
-    linkedByIndex[i + "," + i] = 1;
-};
-graph.links.forEach(function (d) {
-    linkedByIndex[d.source.index + "," + d.target.index] = 1;
-});
-//This function looks up whether a pair are neighbours
-function neighboring(a, b) {
-    return linkedByIndex[a.index + "," + b.index];
-}
-function connectedNodes() {
-    if (toggle == 0) {
-        // reduce the opacity of all but neighbouring nodes
-        d = d3.select(this).node().__data__;
-        // console.log(d3.select(this).node().childNodes[0])
-        
-        link.style("opacity", function (o) {
-            return d.index==o.source.index | d.index==o.target.index ? 1 : 0.01;
-        });
-        toggle = 1;
-    } else {
-        toggle = 0;
-        restart();
-        // reset opacity=1
-        // node.style("opacity", 1);
-        // // link.style("opacity", 1);
-        // link.style("opacity", function (d) {return (d.value);});
-    }
+// Compute the maximum cumulative length of any node in the tree.
+function maxLength(d) {
+return d.data.length + (d.children ? d3.max(d.children, maxLength) : 0);
 }
 
-// adjust edge threshold
-function threshold(thresh) {
-    console.log('Datasets thresh: '+thresh)
-    graph.links.splice(0, graph.links.length);
-        for (var i = 0; i < graphRec.links.length; i++) {
-            if (graphRec.links[i].value > thresh) {graph.links.push(graphRec.links[i]);}
-        }
-    restart();
+// Set the radius of each node by recursively summing and scaling the distance from the root.
+function setRadius(d, y0, k) {
+d.radius = (y0 += d.data.length) * k;
+if (d.children) d.children.forEach(function(d) { setRadius(d, y0, k); });
 }
 
-// reset graph visualisation
-function restart() {
-    link = link.data(graph.links);
-    link.exit().remove();
-    link.enter().insert("line", ".node").attr("class", "link");
-    // link.style("stroke-width", function (d) {return (0.5-d.value)*3;});
-    // link.style("opacity", function (d) {return (d.value-0.45)*2;});
-    link.style("opacity", 0.8);
-    
-    node = node.data(graph.nodes);
-    node.enter().insert("circle", ".cursor").attr("class", "node").attr("r", 5).call(force.drag);
-    force.start();
+// Set the color of each node by recursively inheriting.
+function setColor(d) {
+var name = d.data.name;
+d.color = color.domain().indexOf(name) >= 0 ? color(name) : d.parent ? d.parent.color : null;
+if (d.children) d.children.forEach(setColor);
 }
 
-document.getElementById('thersholdSlider').value=0.5;
-threshold(0.5);
+function linkVariable(d) {
+return linkStep(d.source.x, d.source.radius, d.target.x, d.target.radius);
+}
+
+function linkConstant(d) {
+return linkStep(d.source.x, d.source.y, d.target.x, d.target.y);
+}
+
+function linkExtensionVariable(d) {
+return linkStep(d.target.x, d.target.radius, d.target.x, innerRadius);
+}
+
+function linkExtensionConstant(d) {
+return linkStep(d.target.x, d.target.y, d.target.x, innerRadius);
+}
+
+// Like d3.svg.diagonal.radial, but with square corners.
+function linkStep(startAngle, startRadius, endAngle, endRadius) {
+var c0 = Math.cos(startAngle = (startAngle - 90) / 180 * Math.PI),
+    s0 = Math.sin(startAngle),
+    c1 = Math.cos(endAngle = (endAngle - 90) / 180 * Math.PI),
+    s1 = Math.sin(endAngle);
+return "M" + startRadius * c0 + "," + startRadius * s0
+    + (endAngle === startAngle ? "" : "A" + startRadius + "," + startRadius + " 0 0 " + (endAngle > startAngle ? 1 : 0) + " " + startRadius * c1 + "," + startRadius * s1)
+    + "L" + endRadius * c1 + "," + endRadius * s1;
+}

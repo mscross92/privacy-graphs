@@ -1,24 +1,28 @@
+
+
+var graph1 = ds;
+
 // constants for the SVG
-var width1 = 1000,
-    height1 = 700;
+var width1 = 600,
+    height1 = 600;
 
 // set up the colour scale
 var color1 = d3.scale.category20();
 
 // set up the force layout
 var force1 = d3.layout.force()
-    .charge(-100)
-    .linkStrength(function(d) { return  ((d.value * 0.9)) })
-    .linkDistance(40)
+    .charge(-60)
+    .linkStrength(function(d) { return  d.value })
+    // .linkDistance(200)
     // .linkDistance(function(d) { return  (Math.min((2-d.value*1.8),0.02)*2000); })
     .size([width1, height1]);
 
 // add svg to body of doc
-var svg1 = d3.select("body").append("svg")
-    .attr("width", width1)
-    .attr("height", height1)
-    // .attr("transform", "scale(1.2)")
-    .call(d3.behavior.zoom().on("zoom", function () {svg.attr("transform", d3.event.transform)}))
+var svg1 = d3.select("#g1")
+    // .attr("width", width1)
+    // .attr("height", height1)
+    .attr("transform", "scale(1.0)")
+    // .call(d3.behavior.zoom().on("zoom", function () {svg.attr("transform", d3.event.transform)}))
 
 // store original graph1 data to redraw if needed
 graph1Rec=JSON.parse(JSON.stringify(graph1));
@@ -45,6 +49,7 @@ var node1 = svg1.selectAll(".node")
     .on('dblclick', connectednodes);
 node1.append("circle")
     .attr("r", 5)
+    // .style("fill", "#DB7093")
     .style("fill", function (d) {return color1(d.group);})
 node1.append("text")
     .attr("dx", 5)
@@ -139,5 +144,5 @@ function restart1() {
     force1.start();
 }
 
-// document.getElementById('thersholdSlider1').value=0.5;
-threshold1(0.5);
+document.getElementById('thersholdSlider1').value=0.56;
+threshold1(0.56);

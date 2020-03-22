@@ -6,45 +6,41 @@
 
         <!-- stylesheets -->
         <link rel="stylesheet" type="text/css" href="css/style.css">
-
+        
         <!-- d3 scripts -->
-        <!-- <script type="text/javascript" src="http://mbostock.github.com/d3/d3.js"></script> -->
         <script type="text/javascript" src="scripts/d3.js"></script>
 
         <!-- data scripts -->
-        <!-- <script type="text/javascript" src="data/datasets.js"></script> -->
-        <script type="text/javascript" src="data/ds_shadows.js"></script>
+        <script type="text/javascript" src="data/datasets.js"></script>
+        <!-- <script type="text/javascript" src="data/ds_shadows.js"></script> -->
         <!-- <script type="text/javascript" src="all.js"></script> -->
         <!-- <script type="text/javascript" src="social.js"></script> -->
         <!-- <script type="text/javascript" src="legal.js"></script> -->
-        <!-- <script type="text/javascript" src="higher.js"></script> -->
+        <!-- <script type="text/javascript" src="data/radial.js"></script> -->
         <!-- <script type="text/javascript" src="ds_phrases.js"></script> -->
 
-    </head>
-    <body>
-        <form style="display: inline-block;">
-            <!-- <span> -->
-                <b>Privacy datasets</b>: 0.0 <input type="range" class="sldr" id="thersholdSlider" name="points" value="0.5" min="0.0" max="1.0" step="0.01" onchange="threshold(this.value)"> 1.0
-                <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                Pin nodes: 
-                <label class="switch">
-                    <input type="checkbox">
-                    <span class="slider"></span>
-                </label> -->
-            <!-- </span> -->
-        </form>
-        <span style="width: 800px; height: 10px; display: inline-block;"></span>
-        <!-- <span style="width: 300px; height: 10px; display: inline-block;"></span> -->
-        <!-- <form style="display: inline-block;">
-            <span>
-                <b>Facebook</b>: 0.0 <input type="range" class="sldr" id="thersholdSlider1" name="points" value="0.5" min="0.0" max="1.0" step="0.01" onchange="threshold1(this.value)"> 1.0
-                
-            </span>
-        </form> -->
-        <br>
 
-        <!-- <script type="text/javascript" src="scripts/g0_scripts.js"></script> -->
+    </head>
+    <body style="padding: 50px;">
+        
+        <span style="width:600px; height:50px; display: inline-block;">
+            <b>Agglomerative clustering</b>
+            <br><br>
+        </span>
+
+        <span style="width: 600px; height:50px; display: inline-block;"><b>Force graph</b>
+        <br>
+        <form>
+            Link threshold: 0.0 <input type="range" class="sldr" id="thersholdSlider1" name="points" value="0.5" min="0.0" max="1.0" step="0.01" onchange="threshold1(this.value)"> 1.0
+        </form>
+        </span>
+
+        <iframe id="g0" width=600 height=620 src="pages/radial.html" style="border: none; margin-top: -10px;"></iframe> 
+        <svg id="g1" width=600 height=600 ></svg>
+        
+        
         <script type="text/javascript" src="scripts/g1_scripts.js"></script>
 
     </body>
 </html>
+
