@@ -50,8 +50,8 @@ body {
         innerRadius = outerRadius - 75;
 
     var color = d3.scaleOrdinal()
-        .domain(["c1", "c2", "c3","c4","c5","c6","c7","c8","c9","c10","c11","c12","c13",
-        "c14","c15","c16","c17","c18","c19","c20","c21","c22","c23"])
+        .domain(["c1", "c2", "c3","c4","c5","c6","c7","c8","c9","c10","c11","c12","c13","c14",
+        "c15","c16","c17","c18","c19","c20","c21","c22","c23"])
         .range(d3.schemeCategory10);
 
     var cluster = d3.cluster()
@@ -65,10 +65,10 @@ body {
     var chart = svg.append("g")
         .attr("transform", "translate(" + outerRadius + "," + outerRadius + ")");
 
-    d3.text("lifeorilng.txt", function(error, lifeorilng) {
+    d3.text("lifeorilngw.txt", function(error, lifeorilngw) {
     if (error) throw error;
 
-    var root = d3.hierarchy(parseNewick(lifeorilng), function(d) { return d.branchset; })
+    var root = d3.hierarchy(parseNewick(lifeorilngw), function(d) { return d.branchset; })
         .sum(function(d) { return d.branchset ? 0 : 1; })
         // .sort(function(a, b) { return (a.value - b.value) || d3.ascending(a.data.length, b.data.length); });
 

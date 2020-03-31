@@ -19,7 +19,7 @@ body {
   stroke-opacity: .25;
 }
 .labels {
-  font: 12px sans-serif;
+  font: 10px sans-serif;
 }
 .link--active {
   stroke: #000 !important;
@@ -36,6 +36,9 @@ body {
   <input type="checkbox"> Show branch length
 </label>
 
+<script src="https://cdn.rawgit.com/eligrey/canvas-toBlob.js/f1a01896135ab378aa5c0118eadd81da55e698d8/canvas-toBlob.js"></script>
+<script src="https://cdn.rawgit.com/eligrey/FileSaver.js/e9d941381475b5df8b7d7691013401e171014e89/FileSaver.min.js"></script>
+<script src="https://d3js.org/d3.v3.min.js"></script>
 
 <!-- neighbours data -->
 <script type="text/javascript" src="../data/radial.js"></script>
@@ -46,12 +49,13 @@ body {
 <!-- Copyright 2016 Mike Bostock https://d3js.org -->
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
-    var outerRadius = 600 / 2,
-        innerRadius = outerRadius - 75;
+    // var outerRadius = 600 / 2,
+    //     innerRadius = outerRadius - 75;
+    var outerRadius = 900 / 2,
+        innerRadius = outerRadius - 70;
 
     var color = d3.scaleOrdinal()
-        .domain(["c1", "c2", "c3","c4","c5","c6","c7","c8","c9","c10","c11","c12","c13",
-        "c14","c15","c16","c17","c18","c19","c20","c21","c22","c23"])
+        .domain(["c1", "c2", "c3","c4","c5","c6","c7","c8","c9","c10","c11","c12","c13","c14","c15","c16","c17","c18","c19"])
         .range(d3.schemeCategory10);
 
     var cluster = d3.cluster()
@@ -65,10 +69,10 @@ body {
     var chart = svg.append("g")
         .attr("transform", "translate(" + outerRadius + "," + outerRadius + ")");
 
-    d3.text("lifeorilng.txt", function(error, lifeorilng) {
+    d3.text("rad_shad.txt", function(error, rad_shad) {
     if (error) throw error;
 
-    var root = d3.hierarchy(parseNewick(lifeorilng), function(d) { return d.branchset; })
+    var root = d3.hierarchy(parseNewick(rad_shad), function(d) { return d.branchset; })
         .sum(function(d) { return d.branchset ? 0 : 1; })
         // .sort(function(a, b) { return (a.value - b.value) || d3.ascending(a.data.length, b.data.length); });
 

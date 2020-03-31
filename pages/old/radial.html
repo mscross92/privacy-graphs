@@ -36,6 +36,7 @@ body {
   <input type="checkbox"> Show branch length
 </label>
 
+
 <!-- neighbours data -->
 <script type="text/javascript" src="../data/radial.js"></script>
 
@@ -49,7 +50,7 @@ body {
         innerRadius = outerRadius - 75;
 
     var color = d3.scaleOrdinal()
-        .domain(["c1", "c2", "c3","c4","c5","c6","c7","c8","c9","c10","c11","c12"])
+        .domain(["c1", "c2", "c3","c4","c5","c6","c7","c8","c9","c10","c11","c12","c13","c14","c15","c16","c17","c18"])
         .range(d3.schemeCategory10);
 
     var cluster = d3.cluster()
@@ -173,4 +174,5 @@ body {
         + (endAngle === startAngle ? "" : "A" + startRadius + "," + startRadius + " 0 0 " + (endAngle > startAngle ? 1 : 0) + " " + startRadius * c1 + "," + startRadius * s1)
         + "L" + endRadius * c1 + "," + endRadius * s1;
     }
+    
 </script>
