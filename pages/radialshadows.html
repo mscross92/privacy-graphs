@@ -69,10 +69,10 @@ body {
     var chart = svg.append("g")
         .attr("transform", "translate(" + outerRadius + "," + outerRadius + ")");
 
-    d3.text("rad_shad.txt", function(error, rad_shad) {
+    d3.text("rad_shad7.txt", function(error, rad_shad7) {
     if (error) throw error;
 
-    var root = d3.hierarchy(parseNewick(rad_shad), function(d) { return d.branchset; })
+    var root = d3.hierarchy(parseNewick(rad_shad7), function(d) { return d.branchset; })
         .sum(function(d) { return d.branchset ? 0 : 1; })
         // .sort(function(a, b) { return (a.value - b.value) || d3.ascending(a.data.length, b.data.length); });
 
