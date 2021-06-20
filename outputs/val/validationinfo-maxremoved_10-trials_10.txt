@@ -1,0 +1,100 @@
+1	0	phone
+1	1	skin
+1	2	debit
+1	3	chat
+1	4	book
+1	5	receipt
+1	6	nude
+1	7	ticket
+1	8	license
+1	9	menu
+2	0	age, skin
+2	1	license, body
+2	2	browser, religion
+2	3	skin, vehicle
+2	4	birthdate, ticket
+2	5	married, book
+2	6	occasion, debit
+2	7	facial, surname
+2	8	menu, fitness
+2	9	debit, street
+3	0	body, fitness, nude
+3	1	license, hobbies, medication
+3	2	handwriting, forename, colleagues
+3	3	clothing, opinion, spectators
+3	4	photo, hobbies, id
+3	5	username, disability, healthcare
+3	6	accessories, friends, clothing
+3	7	browser, disability, id
+3	8	browser, medication, hobbies
+3	9	debit, opinion, healthcare
+4	0	surname, height, handwriting, birthplace
+4	1	comments, hair, tattoo, spectators
+4	2	chat, surname, passport, hobbies
+4	3	comments, vehicle, book, financial
+4	4	email, browser, age, eye
+4	5	location, comments, friends, body
+4	6	weight, eye, body, prescription
+4	7	legal, opinion, relationship, colleagues
+4	8	receipt, chat, vehicle, spectators
+4	9	colleagues, menu, location, healthcare
+5	0	book, receipt, screen, prescription, license
+5	1	education, phone, street, surname, menu
+5	2	friends, landmark, hobbies, passport, signature
+5	3	city, username, credit, phone, spectators
+5	4	comments, fitness, phone, disability, nationality
+5	5	surname, opinion, facial, colleagues, religion
+5	6	ethnicity, religion, nude, disease, birthdate
+5	7	street, height, surname, ticket, signature
+5	8	facial, financial, pregnant, gender, phone
+5	9	healthcare, domicile, browsing, email, weight
+6	0	id, weight, pregnant, friends, spectators, profession
+6	1	profession, postcode, username, tattoo, colleagues, signature
+6	2	menu, body, ticket, birthdate, domicile, location
+6	3	height, newspaper, semi-nude, occasion, photo, chat
+6	4	book, friends, fitness, gender, browser, weight
+6	5	facial, hair, email, browser, friends, age
+6	6	fingerprint, hair, screen, browsing, debit, pregnant
+6	7	body, ticket, profession, postcode, chat, vehicle
+6	8	mail, accessories, medication, username, nationality, handwriting
+6	9	menu, mail, passport, education, medication, email
+7	0	location, fitness, nude, chat, accessories, spectators, occasion
+7	1	receipt, menu, sexuality, debit, passport, chat, hair
+7	2	newspaper, username, medication, education, credit, license, browsing
+7	3	tattoo, mail, pregnant, poster, body, location, email
+7	4	tattoo, hobbies, facial, landmark, colleagues, opinion, device
+7	5	menu, vehicle, pregnant, street, accessories, disability, body
+7	6	email, ticket, weight, eye, username, education, poster
+7	7	religion, signature, surname, email, screen, id, sexuality
+7	8	friends, weight, browsing, location, photo, chat, clothing
+7	9	id, married, semi-nude, eye, colleagues, birthplace, ticket
+8	0	browsing, colleagues, legal, profession, disease, opinion, eye, hair
+8	1	credit, opinion, medication, hair, spectators, body, religion, colleagues
+8	2	profession, forename, friends, chat, height, device, surname, newspaper
+8	3	ticket, disease, signature, credit, vehicle, nude, receipt, colleagues
+8	4	phone, nude, username, street, comments, device, birthplace, fitness
+8	5	birthplace, colleagues, religion, pregnant, city, education, license, menu
+8	6	debit, clothing, facial, fingerprint, profession, colleagues, surname, newspaper
+8	7	username, menu, credit, phone, hair, street, age, height
+8	8	username, relationship, nationality, profession, clothing, domicile, healthcare, spectators
+8	9	handwriting, birthplace, chat, nude, weight, mail, street, browsing
+9	0	surname, ethnicity, mail, skin, vehicle, fingerprint, username, chat, comments
+9	1	surname, nude, hobbies, age, postcode, book, birthdate, opinion, forename
+9	2	domicile, browser, book, skin, accessories, location, fingerprint, debit, friends
+9	3	debit, forename, screen, location, spectators, fingerprint, skin, phone, colleagues
+9	4	ethnicity, colleagues, age, nude, nationality, forename, eye, spectators, phone
+9	5	landmark, accessories, city, clothing, nationality, facial, semi-nude, birthdate, healthcare
+9	6	nationality, friends, fingerprint, eye, photo, disease, religion, domicile, mail
+9	7	financial, location, disability, profession, accessories, married, hobbies, ethnicity, disease
+9	8	location, username, facial, disease, device, birthplace, nationality, financial, passport
+9	9	newspaper, weight, body, screen, postcode, tattoo, id, device, fingerprint
+10	0	license, browsing, domicile, book, birthdate, relationship, skin, clothing, chat, postcode
+10	1	hair, opinion, married, accessories, landmark, prescription, location, chat, relationship, facial
+10	2	nude, menu, book, ethnicity, semi-nude, passport, education, chat, photo, opinion
+10	3	receipt, passport, signature, eye, newspaper, religion, menu, occasion, surname, postcode
+10	4	occasion, colleagues, chat, debit, semi-nude, pregnant, browsing, ticket, newspaper, hair
+10	5	device, browsing, comments, fingerprint, eye, id, receipt, street, browser, landmark
+10	6	street, body, friends, married, mail, fingerprint, passport, ticket, email, birthplace
+10	7	married, landmark, gender, hobbies, poster, facial, handwriting, disease, vehicle, weight
+10	8	spectators, ticket, book, pregnant, username, comments, nationality, vehicle, skin, landmark
+10	9	fitness, location, tattoo, passport, profession, skin, legal, signature, id, menu
